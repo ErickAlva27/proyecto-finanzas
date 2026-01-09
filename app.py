@@ -49,7 +49,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("Sistema Integral de Presupuestos y Finanzas - 6NM62")
+st.title("Sistema Integral de Presupuestos y Finanzas - Alvarez Olvera Erick Ruben 6NM62")
 
 # --- MENÚ LATERAL ---
 st.sidebar.header("Navegación")
@@ -110,13 +110,13 @@ elif modulo == "1. Presupuestos Operativos":
         st.subheader("Presupuesto de Producción")
         col1, col2, col3 = st.columns(3)
         v_est = col1.number_input("Ventas Estimadas", value=st.session_state.get('pres_uni', 0), key="pp_ventas")
+        
+        # Corrección del error: Eliminamos la asignación manual conflictiva
         if_des = col2.number_input("Inventario Final Deseado", value=0, key="pp_if")
         ii_est = col3.number_input("Inventario Inicial", value=0, key="pp_ii")
         
         prod_req = v_est + if_des - ii_est
         st.session_state['pres_prod'] = prod_req
-        st.session_state['pp_if'] = if_des 
-        st.session_state['pp_ii'] = ii_est
         
         st.markdown(f"<div class='metric-card'><h3>{prod_req:,.0f}</h3><p>Unidades a Producir</p></div>", unsafe_allow_html=True)
 
@@ -141,8 +141,7 @@ elif modulo == "1. Presupuestos Operativos":
         compras_uni = req_total + if_mat - ii_mat
         costo_compras = compras_uni * costo_mat
         
-        # Guardar costo total de materiales para costo de producción (Simplificado: Consumo * Costo)
-        # Para ser más exactos usamos la valuación, pero aquí usaremos el costo de reposición para el ejemplo simple
+        # Guardar costo total de materiales
         st.session_state['costo_mat_total'] = req_total * costo_mat 
 
         st.markdown(f"<div class='metric-card'><h3>${costo_compras:,.2f}</h3><p>Presupuesto de Compras</p></div>", unsafe_allow_html=True)
